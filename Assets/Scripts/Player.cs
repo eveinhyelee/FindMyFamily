@@ -37,6 +37,8 @@ public class Player : MonoBehaviour
             _doJump = value;
         }
     }
+    private bool dobleJump = false;
+    [SerializeField] private bool isNotGround = false;
 
 
 
@@ -53,6 +55,7 @@ public class Player : MonoBehaviour
 
         moving();
         jumping();
+        dobleJumpSt();
         doAnim();
         eatingItem();
     }
@@ -69,24 +72,13 @@ public class Player : MonoBehaviour
 
             if (hit) // 무언가 데이터가 들어와있다면 isGround는 true;
             {
-                if (doJump == true) //점프 실행 후 에니메이션 꺼줌기능
+                if (beforeground == false && isJump == true) //점프 실행 후 에니메이션 꺼줌기능
                 {
-
-                    if (isJump == true)
-                    {
-                        dobleJumpst();
-                    }
-                    else
-                    {
-                        doJump = false;
-                    }
-
+                    isJump = false;
+                    doJump = true;
+                    isNotGround = true;
                 }
-                else if (beforeground == false && doJump == true)
-                {
-                    doJump = false;
-                }
-            isGround = true;
+                isGround = true;
             }
         }
     }
@@ -99,19 +91,14 @@ public class Player : MonoBehaviour
             {
                 verticalVelocity = fallingLimit;
             }
-            else if (isJump == true)
-            {
-                doJump = true;                
-                verticalVelocity = 0f;
-                
-            }
-        }
-        else // 중력값을 꺼내 놓으면 낙하데미지를 넣을수 있음 vertialVelocity를 통해서!
+            isNotGround = true;
+        }        
+        else // 땅에 닿았을때, 중력값을 꺼내 놓으면 낙하데미지를 넣을수 있음 vertialVelocity를 통해서!
         {
-            if (isJump == true)
+            if (isJump == true) //점프했을때, 바로 점프를 false로 변경해주고(한번만 실행하기 위함?)
             {
                 isJump = false;
-                doJump = true; // ?
+                doJump = true; // 애니메이션실행
                 verticalVelocity = jumpForce;
             }
             else
@@ -125,9 +112,7 @@ public class Player : MonoBehaviour
     {
         moveDir.x = Input.GetAxisRaw("Horizontal"); //X축 방향키 사용기능 -1 0 1
         rigid.velocity = new Vector2(moveDir.x * moveSpeed, rigid.velocity.y);
-        //moveDir.y = rigid.velocity.y;
-        //rigid.velocity = moveDir * moveSpeed;//리지드바디 이용시 Time.deltaTime을 사용할 필요가없다.
-
+        //리지드바디 이용시 Time.deltaTime을 사용할 필요가없다.
     }
     private void doAnim() //방향키에 따라 바라보는 방향설정
     {
@@ -153,20 +138,19 @@ public class Player : MonoBehaviour
             isJump = true;
         }
     }
-    private void dobleJumpst()
+    private void dobleJumpSt()
     {
-        if (isJump == true && Input.GetKeyDown(KeyCode.Space))
-        {
-            isJump = true;
+        if (isNotGround == true && isJump == true)
+        {            
+            doJump = true;
             verticalVelocity = jumpForce;
-            rigid.AddForce(Vector2.up * verticalVelocity);
-            doJump = false;
+            rigid.velocity = new Vector2(rigid.velocity.x, verticalVelocity);
         }
-        //else if (isGround == true)
-        //{
-        //    verticalVelocity = 0f;//땅에 닿았을 경우
-        //}   
-
+        else if (isGround == true)
+        {
+            verticalVelocity = 0f;//땅에 닿았을 경우
+            isNotGround = false;
+        }
     }
     private void eatingItem()
     {
