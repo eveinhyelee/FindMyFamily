@@ -100,7 +100,6 @@ public class Player : MonoBehaviour
             if (verticalVelocity < fallingLimit)
             {
                 verticalVelocity = fallingLimit;
-
             }            
             isNotGround = true;
         }      
@@ -154,13 +153,12 @@ public class Player : MonoBehaviour
 
     private void doubleJumpSt()
     {
-        if (!doubleJump && isNotGround && doJump && Input.GetKeyDown(KeyCode.Space)) //더블점프 트루가 되는 경우
+        if (!doubleJump && isNotGround && doJump && Input.GetKeyDown(KeyCode.Space)) //더블 점프가 아닐때, 더블점프 트루가 되는 경우
         {
             doubleJump = true;
             verticalVelocity = jumpForce;
             rigid.velocity = new Vector2(rigid.velocity.x, verticalVelocity);
-            doJump = false;        
-
+            doJump = false;
         }              
     }
 
