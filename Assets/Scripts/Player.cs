@@ -38,17 +38,10 @@ public class Player : MonoBehaviour
             _doJump = value;
         }
     }
-<<<<<<< HEAD
+
     [Header("2단점프")]
     [SerializeField] private bool isNotGround = false; //2단 점프를 할수 있는지?
-    [SerializeField] private bool doubleJump = false; //2단 점프 중인지?
-    private float cannotJump = 0f; 
-=======
-    private bool dobleJump = false;
-    [SerializeField] private bool isNotGround = false;
-
->>>>>>> 4ccc9be879d03ab0411d53b5a38ab2bc7ecdcb56
-
+    [SerializeField] private bool doubleJump = false; //2단 점프 중인지?  
 
     void Start()
     {
@@ -63,11 +56,8 @@ public class Player : MonoBehaviour
 
         moving();
         jumping();
-<<<<<<< HEAD
+
         doubleJumpSt();
-=======
-        dobleJumpSt();
->>>>>>> 4ccc9be879d03ab0411d53b5a38ab2bc7ecdcb56
         doAnim();
         eatingItem();
     }
@@ -84,23 +74,15 @@ public class Player : MonoBehaviour
 
             if (hit) // 무언가 데이터가 들어와있다면 isGround는 true;
             {
-<<<<<<< HEAD
+
                 if (beforeGround == false && doJump == true) //점프 실행 후 에니메이션 꺼줌기능
                 {
                     doJump = false;
                 }
                 isGround = true;
                 isNotGround = false; //그라운드일때 false처리
-                doubleJump = false;
-=======
-                if (beforeground == false && isJump == true) //점프 실행 후 에니메이션 꺼줌기능
-                {
-                    isJump = false;
-                    doJump = true;
-                    isNotGround = true;
-                }
-                isGround = true;
->>>>>>> 4ccc9be879d03ab0411d53b5a38ab2bc7ecdcb56
+                doubleJump = false;                
+
             }
         }
         else if (verticalVelocity > 0f) //점프중일때 verticalVelocity값이 +가 됨!
@@ -118,25 +100,17 @@ public class Player : MonoBehaviour
             if (verticalVelocity < fallingLimit)
             {
                 verticalVelocity = fallingLimit;
-<<<<<<< HEAD
+
             }            
-        }
-        else // 중력값을 꺼내 놓으면 낙하데미지를 넣을수 있음 vertialVelocity를 통해서!
-=======
-            }
             isNotGround = true;
-        }        
+        }      
+                
         else // 땅에 닿았을때, 중력값을 꺼내 놓으면 낙하데미지를 넣을수 있음 vertialVelocity를 통해서!
->>>>>>> 4ccc9be879d03ab0411d53b5a38ab2bc7ecdcb56
         {
             if (isJump == true) //점프했을때, 바로 점프를 false로 변경해주고(한번만 실행하기 위함?)
             {
                 isJump = false;
-<<<<<<< HEAD
                 doJump = true; //애니메이션 SetBool동작기능
-=======
-                doJump = true; // 애니메이션실행
->>>>>>> 4ccc9be879d03ab0411d53b5a38ab2bc7ecdcb56
                 verticalVelocity = jumpForce;
             }
             else
@@ -177,46 +151,22 @@ public class Player : MonoBehaviour
             doubleJump = false;
         }
     }
-<<<<<<< HEAD
+
     private void doubleJumpSt()
     {
-        if (isNotGround && doJump && Input.GetKeyDown(KeyCode.Space))
+        if (!doubleJump && isNotGround && doJump && Input.GetKeyDown(KeyCode.Space)) //더블점프 트루가 되는 경우
         {
             doubleJump = true;
             verticalVelocity = jumpForce;
             rigid.velocity = new Vector2(rigid.velocity.x, verticalVelocity);
-            doJump = false;
+            doJump = false;        
 
-        }
-        else if (doubleJump && Input.GetKeyDown(KeyCode.Space))
-        {            
-            jumpForce = cannotJump;
-        }
-        else if (isGround)
-        {
-            cannotJump = jumpForce;
-            verticalVelocity = 0;
-        }
-        
-=======
-    private void dobleJumpSt()
-    {
-        if (isNotGround == true && isJump == true)
-        {            
-            doJump = true;
-            verticalVelocity = jumpForce;
-            rigid.velocity = new Vector2(rigid.velocity.x, verticalVelocity);
-        }
-        else if (isGround == true)
-        {
-            verticalVelocity = 0f;//땅에 닿았을 경우
-            isNotGround = false;
-        }
->>>>>>> 4ccc9be879d03ab0411d53b5a38ab2bc7ecdcb56
+        }              
     }
+
+    
     private void eatingItem()
     {
-
 
     }
 
