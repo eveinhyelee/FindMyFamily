@@ -5955,7 +5955,7 @@ Transform:
   m_GameObject: {fileID: 871950266}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.42, y: -0.59, z: 0}
+  m_LocalPosition: {x: 1.55, y: 2.52, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6503,8 +6503,11 @@ MonoBehaviour:
   collLeg: {fileID: 613633150}
   isGround: 0
   rigid: {fileID: 2039865419}
+  verticalVelocity: 0
   groundRatio: 0.05
   jumpForce: 4.5
+  isNotGround: 0
+  doubleJump: 0
 --- !u!61 &2039865422
 BoxCollider2D:
   m_ObjectHideFlags: 0

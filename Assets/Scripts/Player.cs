@@ -19,15 +19,16 @@ public class Player : MonoBehaviour
 
     //중력설정 + 떨어지는 속도 제한
     [SerializeField] Rigidbody2D rigid; //중력설정을 위해 리지드 바디를 가져옴
-    private float verticalVelocity = 0f; //수직으로 받고 있는 힘
+    [SerializeField] private float verticalVelocity = 0f; //수직으로 받고 있는 힘
     private float gravity = 9.81f;  //기본중력
     private float fallingLimit = -10.0f;
-    [SerializeField] private float groundRatio = 1.0f;//터널링방지
+    [SerializeField] private float groundRatio = 0.05f;//터널링방지
     private Animator anim;
 
+    [Header("1단점프")]
     private bool isJump = false;
     [SerializeField] private float jumpForce = 5f;
-    private bool _doJump = false; //애니메이션
+    [SerializeField] private bool _doJump = false; //애니메이션
     private bool doJump
     {
         get => _doJump = true;
@@ -37,7 +38,10 @@ public class Player : MonoBehaviour
             _doJump = value;
         }
     }
-
+    [Header("2단점프")]
+    [SerializeField] private bool isNotGround = false; //2단 점프를 할수 있는지?
+    [SerializeField] private bool doubleJump = false; //2단 점프 중인지?
+    private float cannotJump = 0f; 
 
 
     void Start()
@@ -53,13 +57,14 @@ public class Player : MonoBehaviour
 
         moving();
         jumping();
+        doubleJumpSt();
         doAnim();
         eatingItem();
     }
 
     private void checkGround() //캐릭터의 발 위치에서 레이케스트를 아래로 쏴서 바닥을 판단하는 함수
     {
-        bool beforeground = isGround;
+        bool beforeGround = isGround;
         isGround = false;
 
         if (verticalVelocity <= 0f) //수직으로 받고있는힘이 0이하일때만 raycast 발사
@@ -69,49 +74,38 @@ public class Player : MonoBehaviour
 
             if (hit) // 무언가 데이터가 들어와있다면 isGround는 true;
             {
-                if (doJump == true) //점프 실행 후 에니메이션 꺼줌기능
-                {
-
-                    if (isJump == true)
-                    {
-                        dobleJumpst();
-                    }
-                    else
-                    {
-                        doJump = false;
-                    }
-
-                }
-                else if (beforeground == false && doJump == true)
+                if (beforeGround == false && doJump == true) //점프 실행 후 에니메이션 꺼줌기능
                 {
                     doJump = false;
                 }
-            isGround = true;
+                isGround = true;
+                isNotGround = false; //그라운드일때 false처리
+                doubleJump = false;
             }
+        }
+        else if (verticalVelocity > 0f) //점프중일때 verticalVelocity값이 +가 됨!
+        {
+            isNotGround = true;
+            doJump = true; //점프중일때 한번더 에니메이션 실행을 위함
         }
     }
     private void checkGravity()
     {
-        if (isGround == false) //공중에 떠있음
+        if (!isGround) //공중에 떠있음
         {
             verticalVelocity -= gravity * Time.deltaTime; //중력은 -가되면 떨어지는것임 +일경우 떠오름
+            
             if (verticalVelocity < fallingLimit)
             {
                 verticalVelocity = fallingLimit;
-            }
-            else if (isJump == true)
-            {
-                doJump = true;                
-                verticalVelocity = 0f;
-                
-            }
+            }            
         }
         else // 중력값을 꺼내 놓으면 낙하데미지를 넣을수 있음 vertialVelocity를 통해서!
         {
             if (isJump == true)
             {
                 isJump = false;
-                doJump = true; // ?
+                doJump = true; //애니메이션 SetBool동작기능
                 verticalVelocity = jumpForce;
             }
             else
@@ -151,22 +145,29 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             isJump = true;
+            doubleJump = false;
         }
     }
-    private void dobleJumpst()
+    private void doubleJumpSt()
     {
-        if (isJump == true && Input.GetKeyDown(KeyCode.Space))
+        if (isNotGround && doJump && Input.GetKeyDown(KeyCode.Space))
         {
-            isJump = true;
+            doubleJump = true;
             verticalVelocity = jumpForce;
-            rigid.AddForce(Vector2.up * verticalVelocity);
+            rigid.velocity = new Vector2(rigid.velocity.x, verticalVelocity);
             doJump = false;
-        }
-        //else if (isGround == true)
-        //{
-        //    verticalVelocity = 0f;//땅에 닿았을 경우
-        //}   
 
+        }
+        else if (doubleJump && Input.GetKeyDown(KeyCode.Space))
+        {            
+            jumpForce = cannotJump;
+        }
+        else if (isGround)
+        {
+            cannotJump = jumpForce;
+            verticalVelocity = 0;
+        }
+        
     }
     private void eatingItem()
     {
