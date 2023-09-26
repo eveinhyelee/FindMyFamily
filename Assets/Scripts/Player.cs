@@ -2,13 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using static UnityEditor.Progress;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private float hp;
-    [SerializeField] private float fg;
+    [Header("Player스텟")]
+    [SerializeField] private float m_maxHP;
+    [SerializeField] private float m_curHP;
+    
+    [SerializeField] private float m_maxFG;
+    [SerializeField] private float m_curFG;
+    
     private Vector2 moveDir; // (X.Y값)
     [SerializeField] private float moveSpeed = 1.0f; // 플레이어의 무빙스피드
+
+    [Header("HP연출")]
+    [SerializeField] private PlayerHP playerHP; //플레이어HP스크립트 정의
+    [Header("FG연출")]
+    [SerializeField] private PlayerFG playerFG; //플레이어FG스크립트정의
 
 
     [SerializeField] BoxCollider2D collLeg; //다리로 땅을 인식하는 콜라이더
@@ -41,14 +53,18 @@ public class Player : MonoBehaviour
 
     [Header("2단점프")]
     [SerializeField] private bool isNotGround = false; //2단 점프를 할수 있는지?
-    [SerializeField] private bool doubleJump = false; //2단 점프 중인지?  
+    [SerializeField] private bool doubleJump = false; //2단 점프 중인지?
+
+    [Header("아이템")]
+    [SerializeField] private bool HpItem = false;
 
     void Start()
     {
         anim = GetComponentInChildren<Animator>();
+        m_curHP = m_maxHP;
+        m_curFG = m_maxFG;
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         checkGround();
@@ -74,6 +90,7 @@ public class Player : MonoBehaviour
 
             if (hit) // 무언가 데이터가 들어와있다면 isGround는 true;
             {
+            
 
                 if (beforeGround == false && doJump == true) //점프 실행 후 에니메이션 꺼줌기능
                 {
@@ -165,6 +182,43 @@ public class Player : MonoBehaviour
     
     private void eatingItem()
     {
+
+    }
+
+    public void TriggerEnter(eHitType _type, Collider2D _coll)
+    { 
+        switch (_type) 
+        {
+            case eHitType.HPItem:
+                HpItem = true;
+                break;
+            case eHitType.FGItem:                
+                break;
+            case eHitType.Sign:                
+                break;
+            case eHitType.Enemy:                
+                break;
+            case eHitType.Family:                
+                break;
+
+        }
+    }
+    public void TriggerExit(eHitType _type, Collider2D _coll)
+    {
+        switch (_type)
+        {
+            case eHitType.HPItem:
+                HpItem = false;
+                break;
+            case eHitType.FGItem:                
+                break;
+            case eHitType.Sign:                
+                break;
+            case eHitType.Enemy:                
+                break;
+            case eHitType.Family:                
+                break;
+        }
 
     }
 
