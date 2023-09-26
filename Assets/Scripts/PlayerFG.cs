@@ -8,23 +8,20 @@ public class PlayerFG : MonoBehaviour
     private float m_maxFG;
     private float m_curFG;
 
-    private Image[] checkin;
-    //private Image image1;
-    //private Image image2;
-    //private Image image3;
-    //private Image image3;
-    //private Image image4;
-    //private Image image5;    
-
-    private Player player;
+    private List<Image> backFG = new List<Image>();
+    private List<Image> FG = new List<Image>();    
+   
     void Awake()
     {
-        player = GetComponentInParent<Player>(); //플레이어 스크립트
-        //image1 = transform.GetChild(0).GetComponent<Image>();
-        //image2 = transform.GetChild(1).GetComponent<Image>();
-        //image3 = transform.GetChild(2).GetComponent<Image>();
-        //image4 = transform.GetChild(3).GetComponent<Image>();
-        //image5 = transform.GetChild(4).GetComponent<Image>();
+        Transform trsBack = transform.GetChild(0);
+        backFG.AddRange(trsBack.GetComponentsInChildren<Image>());
+        backFG.RemoveAt(0);
+
+        Transform trsFG = transform.GetChild(1);
+        FG.AddRange(trsFG.GetComponentsInChildren<Image>());
+        FG.RemoveAt(0);
+
+        m_curFG = m_maxFG;
     }
 
     // Update is called once per frame
@@ -32,12 +29,17 @@ public class PlayerFG : MonoBehaviour
     {
         
     }
+    public void SetCurFG(float _curFG) //Player 스크립트에 연동함수
+    {
+        _curFG -= Time.deltaTime; //1초당 5씩 감소 하게 만들기
+        m_curFG = _curFG;
+    }
     //public void SetPlayerFG(float _curFG, float _maxFG)
     //{
     //    _curFG -= 10 * Time.deltaTime );
     //}
-    private void checkPlayerHP()         
+    private void checkPlayerFG()         
     {
-        //20의 배수일때만 오른쪽에서 부터 Destroy하게 하기?
+        
     }
 }

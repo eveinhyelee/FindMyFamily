@@ -76,6 +76,8 @@ public class Player : MonoBehaviour
         doubleJumpSt();
         doAnim();
         eatingItem();
+
+        checkHP();
     }
 
     private void checkGround() //캐릭터의 발 위치에서 레이케스트를 아래로 쏴서 바닥을 판단하는 함수
@@ -183,6 +185,16 @@ public class Player : MonoBehaviour
     private void eatingItem()
     {
 
+    }
+
+    private void checkHP()
+    {
+        playerHP.SetCurHp(m_curHP);
+
+    }
+    private void checkFG()
+    { 
+        playerFG.SetCurFG(m_curFG);
     }
 
     public void TriggerEnter(eHitType _type, Collider2D _coll)
