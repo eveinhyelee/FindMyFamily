@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
     [Header("HP연출")]
     [SerializeField] private PlayerHP playerHP; //플레이어HP스크립트 정의
     [Header("FG연출")]
-    [SerializeField] private PlayerFG playerFG; //플레이어FG스크립트정의
+    [SerializeField] private PlayerFG playerFG; //플레이어FG스크립트 정의
 
 
     [SerializeField] BoxCollider2D collLeg; //다리로 땅을 인식하는 콜라이더
@@ -77,7 +77,8 @@ public class Player : MonoBehaviour
         doAnim();
         eatingItem();
 
-        checkHP();
+        checkHP(); //HP스크립트에서 curHP가져오기 위한 함수!
+        checkFG(); //FG스크립트에서 curFG가져오기 위한 함수!
     }
 
     private void checkGround() //캐릭터의 발 위치에서 레이케스트를 아래로 쏴서 바닥을 판단하는 함수
@@ -190,12 +191,12 @@ public class Player : MonoBehaviour
     private void checkHP()
     {
         playerHP.SetCurHp(m_curHP);
-
     }
     private void checkFG()
     { 
         playerFG.SetCurFG(m_curFG);
     }
+   
 
     public void TriggerEnter(eHitType _type, Collider2D _coll)
     { 

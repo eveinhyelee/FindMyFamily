@@ -6,6 +6,7 @@ public enum eHitType
 { 
     HPItem,
     FGItem,
+    HPFGItem,
     Sign,
     Enemy,
     Family

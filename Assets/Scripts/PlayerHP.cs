@@ -31,9 +31,12 @@ public class PlayerHP : MonoBehaviour
     void Update()
     {   
         hit();
-    }    
-    
+    }
 
+    public void GetHPITem(float _value) //HP아이템을 먹었을 경우 아이템당 + 되는 value값!
+    {
+        m_curHP += _value;
+    }
     public void SetCurHp(float _curHp) //Player 스크립트에 연동
     {
         m_curHP = _curHp;
