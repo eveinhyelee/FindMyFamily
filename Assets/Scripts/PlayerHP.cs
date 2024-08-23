@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,9 +8,9 @@ public class PlayerHP : MonoBehaviour
     private float m_maxHP;
     private float m_curHP;
 
-    private List<Image> imageBack = new List<Image>(); //¹éÀÌ¹ÌÁö ¸®½ºÆ®·Î °ü¸® ÇÏ±â!
-    private List<Image> imageHP = new List<Image>(); //ÇÁ·ĞÆ® ÀÌ¹ÌÁö ¸®½ºÆ®·Î °ü¸® ÇÏ±â!      
-   
+    private List<Image> imageBack = new List<Image>(); //ë°±ì´ë¯¸ì§€ ë¦¬ìŠ¤íŠ¸ë¡œ ê´€ë¦¬ í•˜ê¸°!
+    private List<Image> imageHP = new List<Image>(); //í”„ë¡ íŠ¸ ì´ë¯¸ì§€ ë¦¬ìŠ¤íŠ¸ë¡œ ê´€ë¦¬ í•˜ê¸°!       
+
     void Awake()
     {  
         Transform trsBack = transform.GetChild(0);
@@ -21,27 +21,26 @@ public class PlayerHP : MonoBehaviour
         imageHP.AddRange(trsHp.GetComponentsInChildren<Image>());
         imageHP.RemoveAt(0);
 
-        //image0 = transform.Find("PlayerHpBack/PlayerHpBack(1)").; Æ®·£½ºÆûÀ» ÀÌ¸§À¸·Î Ã£¾ÆÁÖ´Â ¹æ¹ı                             
-            
-        m_curHP = m_maxHP; // HPÃÊ±âÈ­
-        
+        //image0 = transform.Find("PlayerHpBack/PlayerHpBack(1)").; íŠ¸ëœìŠ¤í¼ì„ ì´ë¦„ìœ¼ë¡œ ì°¾ì•„ì£¼ëŠ” ë°©ë²•                           
+
+        m_curHP = m_maxHP; // HPì´ˆê¸°í™”
+
     }
 
-    // Update is called once per frame
     void Update()
     {   
         hit();
     }
 
-    public void GetHPITem(float _value) //HP¾ÆÀÌÅÛÀ» ¸Ô¾úÀ» °æ¿ì ¾ÆÀÌÅÛ´ç + µÇ´Â value°ª!
+    public void GetHPITem(float _value) //HPì•„ì´í…œì„ ë¨¹ì—ˆì„ ê²½ìš° ì•„ì´í…œë‹¹ + ë˜ëŠ” valueê°’!
     {
         m_curHP += _value;
     }
-    public void SetCurHp(float _curHp) //Player ½ºÅ©¸³Æ®¿¡ ¿¬µ¿
+    public void SetCurHp(float _curHp) //Player ìŠ¤í¬ë¦½íŠ¸ì— ì—°ë™
     {
         m_curHP = _curHp;
     }
-    public float GetCurHp() //Switching ½ºÅ©¸³Æ®¿¡¼­ °¡Á®´Ù ¾²±â À§ÇÔ
+    public float GetCurHp() //Switching ìŠ¤í¬ë¦½íŠ¸ì—ì„œ ê°€ì ¸ë‹¤ ì“°ê¸° ìœ„í•¨
     {
         return m_curHP;
     }
@@ -51,8 +50,8 @@ public class PlayerHP : MonoBehaviour
 
     }
     private void hit()
-    { 
-     //´Ù¸¥ °­¾ÆÁö³ª »ç¶÷¿¡°Ô °ø°İ¹Ş¾ÒÀ»¶§ playerHP °¨¼Ò     
+    {
+        //ë‹¤ë¥¸ ê°•ì•„ì§€ë‚˜ ì‚¬ëŒì—ê²Œ ê³µê²©ë°›ì•˜ì„ë•Œ playerHP ê°ì†Œ    
     }
 }
 

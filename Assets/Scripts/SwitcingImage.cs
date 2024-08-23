@@ -1,11 +1,11 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SwitcingImage : MonoBehaviour
 {
-    public enum SwicingType // ºĞ·ù ÇÏ¿© µ¹¾Æ°¡°Ô ÇÏ±â À§ÇÔ!
+    public enum SwicingType // ë¶„ë¥˜ í•˜ì—¬ ëŒì•„ê°€ê²Œ í•˜ê¸° ìœ„í•¨!
     {
         Hp,
         FG
@@ -42,7 +42,7 @@ public class SwitcingImage : MonoBehaviour
                 break;
         }
     }
-    private void HPDestroy() //Ã¼·Â ÀÌ¹ÌÁö »èÁ¦
+    private void HPDestroy() //ì²´ë ¥ ì´ë¯¸ì§€ ì‚­ì œ
     {
         if (playerHp.GetCurHp() <= switcingValue)
         {
@@ -53,7 +53,7 @@ public class SwitcingImage : MonoBehaviour
             img.enabled = true;
         }
     }
-    private void HPAnimActive() //Ã¼·Â ¿¡´Ï¸ŞÀÌ¼Ç È°¼ºÈ­
+    private void HPAnimActive() //ì²´ë ¥ ì—ë‹ˆë©”ì´ì…˜ í™œì„±í™”
     {
         if (playerHp.GetCurHp() <= animactiveValue && playerHp.GetCurHp() > switcingValue) // ex 70 
         {
@@ -64,7 +64,7 @@ public class SwitcingImage : MonoBehaviour
             anim.SetBool("lose", false);
         }
     }
-    private void FGDestroy() //Çã±âÁü ÀÌ¹ÌÁö »èÁ¦
+    private void FGDestroy() //í—ˆê¸°ì§ ì´ë¯¸ì§€ ì‚­ì œ
     {
         if (playerFG.GetCurFG() <= switcingValue)
         {
@@ -75,7 +75,7 @@ public class SwitcingImage : MonoBehaviour
             img.enabled = true;
         }
     }
-    private void FGAnimActive() //Çã±âÁü ¿¡´Ï¸ŞÀÌ¼Ç È°¼ºÈ­
+    private void FGAnimActive() //í—ˆê¸°ì§ ì—ë‹ˆë©”ì´ì…˜ í™œì„±í™”
     {
         if (playerFG.GetCurFG() <= animactiveValue && playerFG.GetCurFG() > switcingValue) // ex 70 
         {

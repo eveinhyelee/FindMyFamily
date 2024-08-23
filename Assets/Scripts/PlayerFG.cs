@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
@@ -8,7 +8,7 @@ public class PlayerFG : MonoBehaviour
 {
     private float m_maxFG;
     private float m_curFG;
-    private float m_FGTimer = 30f;// 30ÃÊ´ç
+    private float m_FGTimer = 30f;// 30ì´ˆ
     private float FGTime = 10f;
 
     private List<Image> backFG = new List<Image>();
@@ -31,30 +31,29 @@ public class PlayerFG : MonoBehaviour
         player = FindAnyObjectByType<Player>();
         if (player == null)
         {
-            Debug.Log("ÇÃ·¹ÀÌ¾î°¡ Á¸ÀçÇÏÁö ¾ÊÀ½");
+            Debug.Log("ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
         }
     }
 
-    // Update is called once per frame
     void Update()
     {        
-        downPerTimeFG(); // ÃÊ´ç ÁÙ¾îµå´Â ¹è°íÇÄ°ÔÀÌÁö
+        downPerTimeFG(); // ì´ˆë‹¹ ì¤„ì–´ë“œëŠ” ë°°ê³ í””ê²Œì´ì§€
     }
-    private void GetFGITem(float _value) //FG¾ÆÀÌÅÛÀ» ¸Ô¾úÀ» °æ¿ì ¾ÆÀÌÅÛ´ç +µÇ´Â value°ª!
+    private void GetFGITem(float _value) //FGì•„ì´í…œì„ ë¨¹ì—ˆì„ ê²½ìš° ì•„ì´í…œë‹¹ +ë˜ëŠ” valueê°’!
     {
         m_curFG += _value;
     }
 
     private void downPerTimeFG()
     {
-        GetFGITem(-Time.deltaTime); // GetFGITem ÇÔ¼ö = ¹ë·ù°ª¿¡ ÀÇÇÑ +µÇ´Â °ª°ú ½Ã°£´ç ÁÙ¾îµå´Â °É + ÇÔ!
+        GetFGITem(-Time.deltaTime); // GetFGITem í•¨ìˆ˜ = ë°¸ë¥˜ê°’ì— ì˜í•œ +ë˜ëŠ” ê°’ê³¼ ì‹œê°„ë‹¹ ì¤„ì–´ë“œëŠ” ê±¸ + í•¨!
     }
 
-    public void SetCurFG(float _curFG) //Player ½ºÅ©¸³Æ®¿¡ FG°ª ¿¬µ¿ÇÔ¼ö
+    public void SetCurFG(float _curFG) //Player ìŠ¤í¬ë¦½íŠ¸ì— FGê°’ ì—°ë™í•¨ìˆ˜
     {
         m_curFG = _curFG;        
     }
-    public float GetCurFG() //Switching ½ºÅ©¸³Æ®¿¡¼­ °¡Á®´Ù ¾²±â À§ÇÔ
+    public float GetCurFG() //Switching ìŠ¤í¬ë¦½íŠ¸ì—ì„œ ê°€ì ¸ë‹¤ ì“°ê¸° ìœ„í•¨
     {
         return m_curFG;
     }

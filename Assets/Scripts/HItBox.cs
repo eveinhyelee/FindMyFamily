@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,19 +10,18 @@ public enum eHitType
     Sign,
     Enemy,
     Family
+        
 }
 public class HItBox : MonoBehaviour
 {
     [SerializeField] private eHitType hitType;
-    private Player player; //ºÎ¸ğÀÇ ½ºÅ©¸³Æ®¸¦ ³Ö¾îÁÖ±âÀ§ÇØ¼­ ¼±¾ğÇÔ
+    private Player player; //ë¶€ëª¨ì˜ ìŠ¤í¬ë¦½íŠ¸ë¥¼ ë„£ì–´ì£¼ê¸°ìœ„í•´ì„œ ì„ ì–¸í•¨
 
-    // Start is called before the first frame update
     void Start()
     {
         player = GetComponentInParent<Player>();    
     }
 
-    // Update is called once per frame
     void Update()
     {
         

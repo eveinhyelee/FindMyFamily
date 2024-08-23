@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -7,40 +7,40 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public class Player : MonoBehaviour
 {
-    [Header("Player½ºÅİ")]
+    [Header("Playerï¿½ï¿½ï¿½ï¿½")]
     [SerializeField] private float m_maxHP;
     [SerializeField] private float m_curHP;
     
     [SerializeField] private float m_maxFG;
     [SerializeField] private float m_curFG;
     
-    private Vector2 moveDir; // (X.Y°ª)
-    [SerializeField] private float moveSpeed = 1.0f; // ÇÃ·¹ÀÌ¾îÀÇ ¹«ºù½ºÇÇµå
+    private Vector2 moveDir; // (X.Yê°’)
+    [SerializeField] private float moveSpeed = 1.0f; // í”Œë ˆì´ì–´ì˜ ë¬´ë¹™ìŠ¤í”¼ë“œ
 
-    [Header("HP¿¬Ãâ")]
-    [SerializeField] private PlayerHP playerHP; //ÇÃ·¹ÀÌ¾îHP½ºÅ©¸³Æ® Á¤ÀÇ
-    [Header("FG¿¬Ãâ")]
-    [SerializeField] private PlayerFG playerFG; //ÇÃ·¹ÀÌ¾îFG½ºÅ©¸³Æ® Á¤ÀÇ
-
-
-    [SerializeField] BoxCollider2D collLeg; //´Ù¸®·Î ¶¥À» ÀÎ½ÄÇÏ´Â Äİ¶óÀÌ´õ
-    [SerializeField] private bool isGround;//¶¥¿¡¼­ ÀÖ´ÂÁö
-
-    //°¢°¢ ¾Ö´Ï¸ŞÀÌ¼Ç ¼³Á¤
+    [Header("HPï¿½ï¿½ï¿½ï¿½")]
+    [SerializeField] private PlayerHP playerHP; //í”Œë ˆì´ì–´HPìŠ¤í¬ë¦½íŠ¸ ì •ì˜
+    [Header("FGï¿½ï¿½ï¿½ï¿½")]
+    [SerializeField] private PlayerFG playerFG; //í”Œë ˆì´ì–´FGìŠ¤í¬ë¦½íŠ¸ ì •ì˜
 
 
-    //Áß·Â¼³Á¤ + ¶³¾îÁö´Â ¼Óµµ Á¦ÇÑ
-    [SerializeField] Rigidbody2D rigid; //Áß·Â¼³Á¤À» À§ÇØ ¸®Áöµå ¹Ùµğ¸¦ °¡Á®¿È
-    [SerializeField] private float verticalVelocity = 0f; //¼öÁ÷À¸·Î ¹Ş°í ÀÖ´Â Èû
-    private float gravity = 9.81f;  //±âº»Áß·Â
+    [SerializeField] BoxCollider2D collLeg; //ë‹¤ë¦¬ë¡œ ë•…ì„ ì¸ì‹í•˜ëŠ” ì½œë¼ì´ë”
+    [SerializeField] private bool isGround; //ë•…ì—ì„œ ìˆëŠ”ì§€
+
+    //ê°ê° ì• ë‹ˆë©”ì´ì…˜ ì„¤ì •
+
+
+    //ì¤‘ë ¥ì„¤ì • + ë–¨ì–´ì§€ëŠ” ì†ë„ ì œí•œ
+    [SerializeField] Rigidbody2D rigid; //ì¤‘ë ¥ì„¤ì •ì„ ìœ„í•´ ë¦¬ì§€ë“œ ë°”ë””ë¥¼ ê°€ì ¸ì˜´
+    [SerializeField] private float verticalVelocity = 0f; //ìˆ˜ì§ìœ¼ë¡œ ë°›ê³  ìˆëŠ” í˜
+    private float gravity = 9.81f;  //ê¸°ë³¸ì¤‘ë ¥
     private float fallingLimit = -10.0f;
-    [SerializeField] private float groundRatio = 0.05f;//ÅÍ³Î¸µ¹æÁö
+    [SerializeField] private float groundRatio = 0.05f; //í„°ë„ë§ë°©ì§€
     private Animator anim;
 
-    [Header("1´ÜÁ¡ÇÁ")]
+    [Header("1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
     private bool isJump = false;
     [SerializeField] private float jumpForce = 5f;
-    [SerializeField] private bool _doJump = false; //¾Ö´Ï¸ŞÀÌ¼Ç
+    [SerializeField] private bool _doJump = false; //ì• ë‹ˆë©”ì´ì…˜
     private bool doJump
     {
         get => _doJump = true;
@@ -51,18 +51,19 @@ public class Player : MonoBehaviour
         }
     }
 
-    [Header("2´ÜÁ¡ÇÁ")]
-    [SerializeField] private bool isNotGround = false; //2´Ü Á¡ÇÁ¸¦ ÇÒ¼ö ÀÖ´ÂÁö?
-    [SerializeField] private bool doubleJump = false; //2´Ü Á¡ÇÁ ÁßÀÎÁö?
+    [Header("2ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
+    [SerializeField] private bool isNotGround = false; //2ë‹¨ ì í”„ë¥¼ í• ìˆ˜ ìˆëŠ”ì§€?
+    [SerializeField] private bool doubleJump = false; //2ë‹¨ ì í”„ ì¤‘ì¸ì§€?
 
-    [Header("¾ÆÀÌÅÛ")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
     [SerializeField] private bool HpItem = false;
 
     void Start()
     {
         anim = GetComponentInChildren<Animator>();
-        m_curHP = m_maxHP;
-        m_curFG = m_maxFG;
+        m_curHP = m_maxHP; //ìµœëŒ€ HPë¥¼ í˜„ì¬ HPë¡œ ì´ˆê¸°checkHP(); //HPìŠ¤í¬ë¦½íŠ¸ì—ì„œ curHPê°€ì ¸ì˜¤ê¸° ìœ„í•œ í•¨ìˆ˜!
+        checkFG(); //FGìŠ¤í¬ë¦½íŠ¸ì—ì„œ curFGê°€ì ¸ì˜¤ê¸° ìœ„í•œ í•¨ìˆ˜!
+        m_curFG = m_maxFG; //ìµœëŒ€ FGë¥¼ í˜„ì¬ FGë¡œ ì´ˆê¸°í™”
     }
     
     void Update()
@@ -77,79 +78,79 @@ public class Player : MonoBehaviour
         doAnim();
         eatingItem();
 
-        checkHP(); //HP½ºÅ©¸³Æ®¿¡¼­ curHP°¡Á®¿À±â À§ÇÑ ÇÔ¼ö!
-        checkFG(); //FG½ºÅ©¸³Æ®¿¡¼­ curFG°¡Á®¿À±â À§ÇÑ ÇÔ¼ö!
+        checkHP(); //HPìŠ¤í¬ë¦½íŠ¸ì—ì„œ curHPê°€ì ¸ì˜¤ê¸° ìœ„í•œ í•¨ìˆ˜!
+        checkFG(); //FGìŠ¤í¬ë¦½íŠ¸ì—ì„œ curFGê°€ì ¸ì˜¤ê¸° ìœ„í•œ í•¨ìˆ˜!
     }
 
-    private void checkGround() //Ä³¸¯ÅÍÀÇ ¹ß À§Ä¡¿¡¼­ ·¹ÀÌÄÉ½ºÆ®¸¦ ¾Æ·¡·Î ½÷¼­ ¹Ù´ÚÀ» ÆÇ´ÜÇÏ´Â ÇÔ¼ö
+    private void checkGround() //ìºë¦­í„°ì˜ ë°œ ìœ„ì¹˜ì—ì„œ ë ˆì´ì¼€ìŠ¤íŠ¸ë¥¼ ì•„ë˜ë¡œ ì´ì„œ ë°”ë‹¥ì„ íŒë‹¨í•˜ëŠ” í•¨ìˆ˜
     {
         bool beforeGround = isGround;
         isGround = false;
 
-        if (verticalVelocity <= 0f) //¼öÁ÷À¸·Î ¹Ş°íÀÖ´ÂÈûÀÌ 0ÀÌÇÏÀÏ¶§¸¸ raycast ¹ß»ç
+        if (verticalVelocity <= 0f) //ìˆ˜ì§ìœ¼ë¡œ ë°›ê³ ìˆëŠ”í˜ì´ 0ì´í•˜ì¼ë•Œë§Œ raycast ë°œì‚¬
         {
             RaycastHit2D hit = Physics2D.BoxCast(collLeg.bounds.center, collLeg.bounds.size,
                 0f, Vector2.down, groundRatio, LayerMask.GetMask("Ground"));
 
-            if (hit) // ¹«¾ğ°¡ µ¥ÀÌÅÍ°¡ µé¾î¿ÍÀÖ´Ù¸é isGround´Â true;
+            if (hit) // ë¬´ì–¸ê°€ ë°ì´í„°ê°€ ë“¤ì–´ì™€ìˆë‹¤ë©´ isGroundëŠ” true;
             {
             
 
-                if (beforeGround == false && doJump == true) //Á¡ÇÁ ½ÇÇà ÈÄ ¿¡´Ï¸ŞÀÌ¼Ç ²¨ÁÜ±â´É
+                if (beforeGround == false && doJump == true) //ì í”„ ì‹¤í–‰ í›„ ì—ë‹ˆë©”ì´ì…˜ êº¼ì¤Œê¸°ëŠ¥
                 {
                     doJump = false;
                 }
                 isGround = true;
-                isNotGround = false; //±×¶ó¿îµåÀÏ¶§ falseÃ³¸®
+                isNotGround = false; //ê·¸ë¼ìš´ë“œì¼ë•Œ falseì²˜ë¦¬
                 doubleJump = false;                
 
             }
         }
-        else if (verticalVelocity > 0f) //Á¡ÇÁÁßÀÏ¶§ verticalVelocity°ªÀÌ +°¡ µÊ!
+        else if (verticalVelocity > 0f) //ì í”„ì¤‘ì¼ë•Œ verticalVelocityê°’ì´ +ê°€ ë¨!
         {
             isNotGround = true;
-            doJump = true; //Á¡ÇÁÁßÀÏ¶§ ÇÑ¹ø´õ ¿¡´Ï¸ŞÀÌ¼Ç ½ÇÇàÀ» À§ÇÔ
+            doJump = true; // ì í”„ì¤‘ì¼ë•Œ í•œë²ˆë” ì—ë‹ˆë©”ì´ì…˜ ì‹¤í–‰ì„ ìœ„í•¨
         }
     }
     private void checkGravity()
     {
-        if (!isGround) //°øÁß¿¡ ¶°ÀÖÀ½
+        if (!isGround) //ê³µì¤‘ì— ë– ìˆìŒ
         {
-            verticalVelocity -= gravity * Time.deltaTime; //Áß·ÂÀº -°¡µÇ¸é ¶³¾îÁö´Â°ÍÀÓ +ÀÏ°æ¿ì ¶°¿À¸§
-            
+            verticalVelocity -= gravity * Time.deltaTime; //ì¤‘ë ¥ì€ -ê°€ë˜ë©´ ë–¨ì–´ì§€ëŠ”ê²ƒì„ +ì¼ê²½ìš° ë– ì˜¤ë¦„
+
             if (verticalVelocity < fallingLimit)
             {
                 verticalVelocity = fallingLimit;
             }            
             isNotGround = true;
-        }      
-                
-        else // ¶¥¿¡ ´ê¾ÒÀ»¶§, Áß·Â°ªÀ» ²¨³» ³õÀ¸¸é ³«ÇÏµ¥¹ÌÁö¸¦ ³ÖÀ»¼ö ÀÖÀ½ vertialVelocity¸¦ ÅëÇØ¼­!
+        }
+
+        else // ë•…ì— ë‹¿ì•˜ì„ë•Œ, ì¤‘ë ¥ê°’ì„ êº¼ë‚´ ë†“ìœ¼ë©´ ë‚™í•˜ë°ë¯¸ì§€ë¥¼ ë„£ì„ìˆ˜ ìˆìŒ vertialVelocityë¥¼ í†µí•´ì„œ!
         {
-            if (isJump == true) //Á¡ÇÁÇßÀ»¶§, ¹Ù·Î Á¡ÇÁ¸¦ false·Î º¯°æÇØÁÖ°í(ÇÑ¹ø¸¸ ½ÇÇàÇÏ±â À§ÇÔ?)
+            if (isJump == true) //ì í”„í–ˆì„ë•Œ, ë°”ë¡œ ì í”„ë¥¼ falseë¡œ ë³€ê²½í•´ì£¼ê³ (í•œë²ˆë§Œ ì‹¤í–‰í•˜ê¸° ìœ„í•¨?)
             {
                 isJump = false;
-                doJump = true; //¾Ö´Ï¸ŞÀÌ¼Ç SetBoolµ¿ÀÛ±â´É
+                doJump = true; //ì• ë‹ˆë©”ì´ì…˜ SetBoolë™ì‘ê¸°ëŠ¥
                 verticalVelocity = jumpForce;
             }
             else
             {
-                verticalVelocity = 0f;//¶¥¿¡ ´ê¾ÒÀ» °æ¿ì
+                verticalVelocity = 0f;//ë•…ì— ë‹¿ì•˜ì„ ê²½ìš°
             }
         }
         rigid.velocity = new Vector2(rigid.velocity.x, verticalVelocity);
     }
-    private void moving() //ÁÂ¿ì¹æÇâÅ°¼³Á¤
+    private void moving() //ì¢Œìš°ë°©í–¥í‚¤ì„¤ì •
     {
-        moveDir.x = Input.GetAxisRaw("Horizontal"); //XÃà ¹æÇâÅ° »ç¿ë±â´É -1 0 1
+        moveDir.x = Input.GetAxisRaw("Horizontal"); //Xì¶• ë°©í–¥í‚¤ ì‚¬ìš©ê¸°ëŠ¥ -1 0 1
         rigid.velocity = new Vector2(moveDir.x * moveSpeed, rigid.velocity.y);
-        //¸®Áöµå¹Ùµğ ÀÌ¿ë½Ã Time.deltaTimeÀ» »ç¿ëÇÒ ÇÊ¿ä°¡¾ø´Ù.
+        //ë¦¬ì§€ë“œë°”ë”” ì´ìš©ì‹œ Time.deltaTimeì„ ì‚¬ìš©í•  í•„ìš”ê°€ì—†ë‹¤.
     }
-    private void doAnim() //¹æÇâÅ°¿¡ µû¶ó ¹Ù¶óº¸´Â ¹æÇâ¼³Á¤
+    private void doAnim() //ë°©í–¥í‚¤ì— ë”°ë¼ ë°”ë¼ë³´ëŠ” ë°©í–¥ì„¤ì •
     {
-        anim.SetInteger("Walk", (int)moveDir.x); //¾Ö´Ï¸ŞÀÌÅÍ³»¿¡ ÆÄ¶ó¹ÌÅÍÀû¿ë
+        anim.SetInteger("Walk", (int)moveDir.x); //ì• ë‹ˆë©”ì´í„°ë‚´ì— íŒŒë¼ë¯¸í„°ì ìš©
 
-        if (moveDir.x > 0f && transform.localScale.x != -1.0f) //¿ŞÂÊÀ» º¸°íÀÖ¾î ±âº»¼³Á¤À» -1·Î ÇØµÒ
+        if (moveDir.x > 0f && transform.localScale.x != -1.0f) //ì™¼ìª½ì„ ë³´ê³ ìˆì–´ ê¸°ë³¸ì„¤ì •ì„ -1ë¡œ í•´ë‘ 
         {
             transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
         }
@@ -173,7 +174,8 @@ public class Player : MonoBehaviour
 
     private void doubleJumpSt()
     {
-        if (!doubleJump && isNotGround && doJump && Input.GetKeyDown(KeyCode.Space)) //´õºí Á¡ÇÁ°¡ ¾Æ´Ò¶§, ´õºíÁ¡ÇÁ Æ®·ç°¡ µÇ´Â °æ¿ì
+        if (!doubleJump && isNotGround && doJump && Input.GetKeyDown(KeyCode.Space))
+            //ë”ë¸” ì í”„ê°€ ì•„ë‹ë•Œ, ë”ë¸”ì í”„ íŠ¸ë£¨ê°€ ë˜ëŠ” ê²½ìš°
         {
             doubleJump = true;
             verticalVelocity = jumpForce;
