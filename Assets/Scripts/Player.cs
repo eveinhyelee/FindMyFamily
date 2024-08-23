@@ -7,7 +7,7 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public class Player : MonoBehaviour
 {
-    [Header("Player����")]
+    [Header("Player스")]
     [SerializeField] private float m_maxHP;
     [SerializeField] private float m_curHP;
     
@@ -17,9 +17,9 @@ public class Player : MonoBehaviour
     private Vector2 moveDir; // (X.Y값)
     [SerializeField] private float moveSpeed = 1.0f; // 플레이어의 무빙스피드
 
-    [Header("HP����")]
+    [Header("HP연출")]
     [SerializeField] private PlayerHP playerHP; //플레이어HP스크립트 정의
-    [Header("FG����")]
+    [Header("FG연출")]
     [SerializeField] private PlayerFG playerFG; //플레이어FG스크립트 정의
 
 
@@ -37,7 +37,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float groundRatio = 0.05f; //터널링방지
     private Animator anim;
 
-    [Header("1������")]
+    [Header("1단점프")]
     private bool isJump = false;
     [SerializeField] private float jumpForce = 5f;
     [SerializeField] private bool _doJump = false; //애니메이션
@@ -51,11 +51,11 @@ public class Player : MonoBehaviour
         }
     }
 
-    [Header("2������")]
+    [Header("2단점프")]
     [SerializeField] private bool isNotGround = false; //2단 점프를 할수 있는지?
     [SerializeField] private bool doubleJump = false; //2단 점프 중인지?
 
-    [Header("������")]
+    [Header("아이템")]
     [SerializeField] private bool HpItem = false;
 
     void Start()
